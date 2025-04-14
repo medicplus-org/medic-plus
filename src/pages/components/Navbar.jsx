@@ -1,6 +1,7 @@
 import React from "react";
 import logo from "../../assets/images/logo.png";
 import { useState, useEffect } from "react";
+import { Link } from "react-router";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -29,22 +30,22 @@ const Navbar = () => {
       }
     `}
     >
-      <span>
-        <img className="h-11 w-auto " src={logo} alt="" />
-      </span>
+      <Link to="/" className="text-2xl font-bold">
+        Medic<span className="text-blue-400">Plus</span>
+      </Link>
       <div
         className={`flex gap-x-10 ${isScrolled ? "text-black" : "text-white"}`}
       >
-        <span>Home</span>
+        <Link to="/">Home</Link>
         <span>About</span>
-        <span>Doctors</span>
+        <Link to="/doctors">Doctors</Link>
         <span>Appointment</span>
       </div>
       <div
         className={`flex gap-x-10 ${isScrolled ? "text-black" : "text-white"}`}
       >
-        <span>Sign Up</span>
-        <span>Login</span>
+        <Link to="/signup">Sign Up</Link>
+        <Link to="/login">Login</Link>
       </div>
     </nav>
   );

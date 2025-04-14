@@ -8,16 +8,15 @@ const Footer = () => {
         <div className="flex flex-col space-y-4">
           <h1 className="text-3xl font-bold">About</h1>
           <p className="font-light">
-            Welcome to Digital Deals Hub, the ultimate platform for <br />
-            advertising and discovering digital hardware. We connect buyers and{" "}
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis,{" "}
             <br />
-            sellers with the latest gadgets, from laptops and smartphones to{" "}
-            <br />
-            gaming accessories and workstations. Our user-friendly interface{" "}
-            <br />
-            ensures a seamless experience, making it easy to showcase and find{" "}
-            <br />
-            top-quality products.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio
+            deserunt veniam nostrum <br />
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque
+            dolore adipisci nesciunt <br />
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veritatis
+            rem, aut <br />
+            Lorem ipsum dolor sit amet
           </p>
         </div>
         <div className="flex flex-col space-y-4 ">
