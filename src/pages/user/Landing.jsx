@@ -114,7 +114,7 @@ const Landing = () => {
             paradisematic country
           </p>
         </div>
-        <div className=" p-4 w-full grid grid-5-cols gap-4 pt-5 gap-y-6 px-3 sm:px-0 items-center">
+        <div className="p-4 w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 pt-5 items-center justify-items-center">
           <div className="bg-white w-[260px] flex flex-col justify-center items-center rounded-lg border border-blue-200 cursor-pointer hover:translate-y-[-10px] transition-all duration-500">
             <div>
               <img
