@@ -8,6 +8,7 @@ import TopDoctors from "../components/TopDoctors";
 import { motion } from "framer-motion";
 import SpecialityMenu from "../components/SpecialityMenu";
 import BlogSection from "../components/BlogSection";
+import herothumb from "../../assets/images/herothumb.png";
 
 const Landing = () => {
   return (
@@ -18,6 +19,7 @@ const Landing = () => {
           loop
           muted
           className="absolute top-0 left-0 w-full h-full object-cover"
+          poster={herothumb}
         >
           <source src={hero} type="video/mp4" />
         </video>
