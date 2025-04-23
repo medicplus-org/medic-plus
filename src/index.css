@@ -1,7 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
 @import "tailwindcss";
 
 .grid-5-cols {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 1rem; /* adjust spacing if needed */
+}
+
+* {
+  font-family: Outfit;
 }

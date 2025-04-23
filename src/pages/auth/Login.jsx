@@ -1,8 +1,44 @@
 import React from "react";
 import hero from "../../assets/images/herov1.mp4";
 import { Link } from "react-router";
+import { useNavigate } from "react-router";
+import { apiUserLogin } from "../../services/auth";
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    // console.log("Form submitted");
+    const formData = new FormData(event.target);
+
+    try {
+      const response = await apiUserLogin(formData);
+      const { User } = response.data;
+      localStorage.setItem("token", response.data.accessTokenLogin); //fetch token from backend
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          role: User.role,
+          email: User.email,
+          UserId: User._id || User.UserId,
+        })
+      );
+
+      alert("User login successfull!");
+
+      // nagigate user to their role
+      if (User.role === "user") {
+        navigate("/doctors");
+      } else {
+        navigate("/selectlogin");
+      }
+      // console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="relative w-full h-screen overflow-hidden">
       <video
@@ -25,8 +61,10 @@ const Login = () => {
           >
             Medic<span className="text-blue-500">Plus</span>
           </Link>
-          <h1 className="text-2xl font-semibold text-center mb-6">Log In</h1>
-          <form className="space-y-4">
+          <h1 className="text-2xl font-semibold text-center mb-6">
+            Patient Log In
+          </h1>
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
               <label
                 htmlFor="email"
@@ -73,7 +111,10 @@ const Login = () => {
 
             <p className="text-sm text-center text-white">
               No account yet?{" "}
-              <Link to="/signup" className="text-blue-500 hover:underline">
+              <Link
+                to="/selectsignup"
+                className="text-blue-500 hover:underline"
+              >
                 Sign Up
               </Link>
             </p>

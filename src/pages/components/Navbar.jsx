@@ -1,15 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router"; // Updated import for react-router-dom v6
 import logo from "../../assets/images/logo.png";
-import { useState, useEffect } from "react";
-import { Link } from "react-router";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
+  const currentPage = window.location.pathname;
+
+  const navbarStyle =
+    currentPage === "/" || currentPage === "/home"
+      ? isScrolled
+        ? "bg-white shadow-md text-black"
+        : "bg-transparent text-white"
+      : "bg-white text-black"; // Force white bg on other pages
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
-        console.log("Scroll position:", window.scrollY);
         setIsScrolled(true); // Change color when scrolling down
       } else {
         setIsScrolled(false); // Transparent at the top
@@ -22,30 +29,20 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`flex flex-row justify-between px-20 py-6 h-14 w-[100%] items-center text-white z-50 fixed border-b border-gray-400 transition-all duration-300
-      ${
-        isScrolled
-          ? "bg-white shadow-md text-black"
-          : "bg-transparent text-white"
-      }
-    `}
+      className={`flex flex-row justify-between px-20 py-6 h-14 w-[100%] items-center text-black z-50 fixed border-b border-gray-400 transition-all duration-300 bg-white shadow-md `}
     >
       <Link to="/" className="text-2xl font-bold">
         Medic<span className="text-blue-400">Plus</span>
       </Link>
-      <div
-        className={`flex gap-x-10 ${isScrolled ? "text-black" : "text-white"}`}
-      >
+      <div className="flex gap-x-10 text-black">
         <Link to="/">Home</Link>
-        <span>About</span>
+        <Link to="/about">About</Link>
         <Link to="/doctors">Doctors</Link>
-        <span>Appointment</span>
+        <Link to="/contact">Contact</Link>
       </div>
-      <div
-        className={`flex gap-x-10 ${isScrolled ? "text-black" : "text-white"}`}
-      >
-        <Link to="/signup">Sign Up</Link>
-        <Link to="/login">Login</Link>
+      <div className="flex gap-x-10 text-black">
+        <Link to="/selectsignup">Sign Up</Link>
+        <Link to="/selectlogin">Login</Link>
       </div>
     </nav>
   );
