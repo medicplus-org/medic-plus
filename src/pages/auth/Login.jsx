@@ -3,6 +3,7 @@ import hero from "../../assets/images/herov1.mp4";
 import { Link } from "react-router";
 import { useNavigate } from "react-router";
 import { apiUserLogin } from "../../services/auth";
+import loginthumb from "../../assets/images/loginthumb.png";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -46,6 +47,7 @@ const Login = () => {
         loop
         muted
         className="absolute top-0 left-0 w-full h-full object-cover"
+        poster={loginthumb}
       >
         <source src={hero} type="video/mp4" />
         Your browser does not support the video tag.
