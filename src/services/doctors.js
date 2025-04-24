@@ -26,6 +26,7 @@ export const apiGetDocAppointment = async () =>
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
+
 export const apiGetUserAppointment = async () =>
   apiClient.get("/appointment", {
     headers: {
@@ -35,3 +36,17 @@ export const apiGetUserAppointment = async () =>
 
 export const apiDeleteUserAppointmentbyId = async (id) =>
   apiClient.delete(`/appointment/${id}`);
+
+export const apiGetAppointmentById = async (id) =>
+  apiClient.get(`/appointment/${id}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+
+export const apiUpdateUserAppointmentById = async (id, data) =>
+  apiClient.patch(`/appointment/${id}`, data, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });

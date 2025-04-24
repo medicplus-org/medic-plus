@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { ChevronDown, User, Calendar, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
-import { apiGetDocAppointment } from "../../services/doctors";
+import {
+  apiGetDocAppointment,
+  apiDeleteUserAppointmentbyId,
+} from "../../services/doctors";
+import toast from "react-hot-toast";
 
 const UserDashboard = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -37,6 +41,21 @@ const UserDashboard = () => {
       setAppointments(userAppointments);
     } catch (error) {
       console.error("Error fetching appointments:", error);
+    }
+  };
+
+  const handleDeleteAppointment = async (id) => {
+    if (!window.confirm("Are you sure you want to cancel this appointment?"))
+      return;
+
+    try {
+      await apiDeleteUserAppointmentbyId(id);
+      toast.success("Appointment canceled successfully");
+      // Refresh list after deletion
+      fetchAppointments();
+    } catch (error) {
+      console.error("Failed to cancel appointment:", error);
+      toast.error("Failed to cancel appointment. Please try again.");
     }
   };
 
@@ -174,12 +193,19 @@ const UserDashboard = () => {
                       Upcoming
                     </button>
                   )}
-                  <button className="border border-gray-300 text-gray-600 px-4 py-2 rounded-md hover:bg-gray-50 transition-colors w-32">
-                    Update appointment
-                  </button>
-                  <button className="border border-gray-300 text-gray-600 px-4 py-2 rounded-md hover:bg-gray-50 transition-colors w-32">
+                  <button
+                    onClick={() => handleDeleteAppointment(appointment._id)}
+                    className="border border-gray-300 text-gray-600 px-4 py-2 rounded-md hover:bg-gray-50 transition-colors w-32"
+                  >
                     Cancel appointment
                   </button>
+
+                  <Link
+                    to={`/edit-appointment/${appointment._id}`}
+                    className="border border-gray-300 text-center text-gray-600 px-4 py-2 rounded-md hover:bg-gray-50 transition-colors w-32"
+                  >
+                    Update appointment
+                  </Link>
                 </div>
               </div>
             ))}

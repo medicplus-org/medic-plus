@@ -16,10 +16,13 @@ import SelectSignup from "./pages/auth/SelectSignup";
 import DocLogin from "./pages/auth/docsignup/DocLogin";
 import BookAppointmentForm from "./pages/components/BookAppointmentForm";
 import Contact from "./pages/user/Contact";
+import EditUserAppointment from "./pages/user/EditUserAppointment";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
     <BrowserRouter>
+      <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
       <Routes>
         <Route path="/" element={<RootLayout />}>
           <Route index={true} element={<Landing />} />
@@ -38,6 +41,10 @@ function App() {
         <Route path="/selectsignup" element={<SelectSignup />} />
         <Route path="/doclogin" element={<DocLogin />} />
         <Route path="/book/:doctorId" element={<BookAppointmentForm />} />
+        <Route
+          path="/edit-appointment/:appointmentId"
+          element={<EditUserAppointment />}
+        />
       </Routes>
     </BrowserRouter>
   );
