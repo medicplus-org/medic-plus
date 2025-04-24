@@ -13,7 +13,8 @@ import herothumb from "../../assets/images/herothumb.png";
 const Landing = () => {
   return (
     <div>
-      <div className="h-screen">
+      <div className="relative h-screen w-full overflow-hidden">
+        {/* Background Video */}
         <video
           autoPlay
           loop
@@ -23,15 +24,19 @@ const Landing = () => {
         >
           <source src={hero} type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30 z-0"></div>
 
-        <div className="relative z-20 flex items-center justify-center h-full w-full px-4">
-          <div className="bg-black/20 backdrop-blur-md text-white p-8 rounded-xl shadow-lg w-full max-w-2xl text-center space-y-6">
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/30 z-0"></div>
+
+        {/* Content Wrapper */}
+        <div className="relative z-20 flex items-center justify-center h-full w-full px-4 sm:px-8">
+          <div className="bg-black/30 backdrop-blur-md text-white p-6 sm:p-8 rounded-xl shadow-lg w-full max-w-3xl text-center space-y-5 sm:space-y-6">
+            {/* Badge */}
             <motion.span
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="text-sm bg-green-100 text-green-800 px-3 py-1 rounded-full mb-4 inline-block font-medium"
+              className="text-xs sm:text-sm bg-green-100 text-green-800 px-3 py-1 rounded-full inline-block font-medium"
             >
               Trusted by Professionals
             </motion.span>
@@ -41,7 +46,7 @@ const Landing = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-4xl md:text-5xl font-bold tracking-wide"
+              className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-wide leading-snug"
             >
               Quality Healthcare, Anytime You Need It
             </motion.h1>
@@ -51,7 +56,7 @@ const Landing = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.8 }}
-              className="text-lg md:text-xl text-gray-200 mt-4 leading-relaxed"
+              className="text-base sm:text-lg md:text-xl text-gray-200 leading-relaxed"
             >
               Connect with licensed doctors near you, book appointments
               instantly, and get the care you deserve — all in one place.
@@ -62,12 +67,12 @@ const Landing = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.7, duration: 0.8 }}
-              className="mt-8 flex flex-col sm:flex-row gap-4 justify-center"
+              className="mt-6 flex flex-col sm:flex-row gap-4 justify-center"
             >
-              <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold">
+              <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold w-full sm:w-auto">
                 Book an Appointment
               </button>
-              <button className="border border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition">
+              <button className="border border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition w-full sm:w-auto">
                 Join as a Doctor
               </button>
             </motion.div>

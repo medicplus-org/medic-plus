@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { CalendarDays, User, LogOut, Stethoscope, Trash2 } from "lucide-react";
+import {
+  CalendarDays,
+  User,
+  LogOut,
+  Stethoscope,
+  Trash2,
+  Edit2,
+  Edit,
+} from "lucide-react";
 import { Link } from "react-router";
 import { Calendar } from "lucide-react";
 import { apiGetUserAppointment } from "../../services/doctors";
@@ -131,8 +139,13 @@ const DocDashboard = () => {
                       </span>
                     </td>
                     <td className="py-4">
+                      <button className="text-green-500 hover:text-green-700">
+                        <Edit />
+                      </button>
+                    </td>
+                    <td className="py-4">
                       <button
-                        onClick={handleDelete}
+                        onClick={() => handleDelete(appointment._id)}
                         className="text-red-500 hover:text-red-700"
                       >
                         <Trash2 className="w-4 h-4" />
