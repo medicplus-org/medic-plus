@@ -99,7 +99,30 @@ const UserDashboard = () => {
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
-        <h2 className="text-xl font-medium mb-6">My Appointments</h2>
+        <h1 className="text-3xl font-bold mb-6">Patient Dashboard</h1>
+        <div className="border-b px-4 mb-4 mt-2 pb-4 border-stone-200">
+          <div className="flex items-center justify-between p-0.5">
+            <div>
+              <Link
+                to={"/dashboard/vendor-profile"}
+                className="text-sm font-bold block"
+              >
+                Good morning, Patient!
+                {/* {vendor.name}! */}
+              </Link>
+              <span className="text-xs block text-stone-500">
+                Friday, April 25th 2025
+              </span>
+            </div>
+            <button className="flex text-sm items-center gap-2 bg-stone-100 transition-colors hover:bg-violet-100 hover:text-violet-700 px-3 py-1.5 rounded">
+              <Calendar />
+              <span>Prev 6 Months</span>
+            </button>
+          </div>
+        </div>
+        <h2 className="text-xl font-medium mb-6 text-center">
+          My Appointments
+        </h2>
 
         {appointments.length === 0 ? (
           <p className="text-gray-500">No appointments found.</p>
@@ -151,6 +174,9 @@ const UserDashboard = () => {
                       Upcoming
                     </button>
                   )}
+                  <button className="border border-gray-300 text-gray-600 px-4 py-2 rounded-md hover:bg-gray-50 transition-colors w-32">
+                    Update appointment
+                  </button>
                   <button className="border border-gray-300 text-gray-600 px-4 py-2 rounded-md hover:bg-gray-50 transition-colors w-32">
                     Cancel appointment
                   </button>

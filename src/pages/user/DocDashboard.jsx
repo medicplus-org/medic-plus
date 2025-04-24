@@ -97,12 +97,12 @@ const DocDashboard = () => {
                 {/* {vendor.name}! */}
               </Link>
               <span className="text-xs block text-stone-500">
-                Friday, March 28th 2025
+                Friday, April 25th 2025
               </span>
             </div>
             <button className="flex text-sm items-center gap-2 bg-stone-100 transition-colors hover:bg-violet-100 hover:text-violet-700 px-3 py-1.5 rounded">
               <Calendar />
-              <span>Prev 6 Months</span>
+              <span>Prev 1 Months</span>
             </button>
           </div>
         </div>
@@ -139,16 +139,16 @@ const DocDashboard = () => {
                       </span>
                     </td>
                     <td className="py-4">
-                      <button className="text-green-500 hover:text-green-700">
-                        <Edit />
+                      <button>
+                        <Edit className="text-green-500 hover:text-green-700 w-5 h-5 " />
                       </button>
                     </td>
                     <td className="py-4">
                       <button
                         onClick={() => handleDelete(appointment._id)}
-                        className="text-red-500 hover:text-red-700"
+                        className=""
                       >
-                        <Trash2 className="w-4 h-4" />
+                        <Trash2 className="w-5 h-5 text-red-500 hover:text-red-700" />
                       </button>
                     </td>
                   </tr>
