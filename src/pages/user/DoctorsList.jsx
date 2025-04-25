@@ -57,39 +57,32 @@ const DoctorsList = () => {
           </div>
 
           {/* Doctor Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 w-full">
             {doctors.map((doctor) => (
               <div
                 key={doctor._id}
-                doctor={doctor}
-                className="bg-white w-[260px] flex flex-col justify-center items-center rounded-lg border border-stone-300"
+                className="bg-white w-full flex flex-col rounded-lg border border-stone-300 shadow-sm"
               >
-                <div>
+                <div className="w-full h-[200px] overflow-hidden rounded-t-lg">
                   <img
                     src={doctor.image}
                     alt={doctor.name}
-                    className="w-full h-[200px] object-cover rounded-t-lg shadow-md"
+                    className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="w-[250px] p-4 flex flex-col gap-y-2 items-center">
-                  <h2 className="text-[22px] text-gray-800 font-extrabold">
+                <div className="p-4 flex flex-col gap-y-2 items-center text-center">
+                  <h2 className="text-[20px] text-gray-800 font-bold">
                     Dr. {doctor.name}
                   </h2>
-                  <h3 className="text-[14px] text-gray-500 font-semibold uppercase tracking-wide">
+                  <h3 className="text-sm text-gray-500 font-semibold uppercase tracking-wide">
                     {doctor.specialization}
                   </h3>
-                  <p className="text-[13px] text-gray-500 text-center">
+                  <p className="text-sm text-gray-500">
                     {doctor.qualifications?.join(", ") || "Experienced Doctor"}
                   </p>
-                  {/* <button onClick={() => setSelectedDoctor(doc._id)}>
-                    Book
-                  </button> */}
-                  {/* {selectedDoctor && (
-                    <BookAppointmentForm doctorId={selectedDoctor} />
-                  )} */}
                   <button
                     onClick={() => navigate(`/book/${doctor._id}`)}
-                    className="mt-2 bg-green-600 text-white px-4 py-2 rounded"
+                    className="mt-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
                   >
                     Book Appointment
                   </button>

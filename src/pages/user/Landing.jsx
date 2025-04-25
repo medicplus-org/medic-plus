@@ -9,8 +9,22 @@ import { motion } from "framer-motion";
 import SpecialityMenu from "../components/SpecialityMenu";
 import BlogSection from "../components/BlogSection";
 import herothumb from "../../assets/images/herothumb.png";
+import IntroScreen from "../components/IntroScreen";
+import { useState } from "react";
 
 const Landing = () => {
+  const [showIntro, setShowIntro] = useState(() => {
+    return sessionStorage.getItem("introSeen") !== "true";
+  });
+
+  const handleFinish = () => {
+    sessionStorage.setItem("introSeen", "true");
+    setShowIntro(false);
+  };
+
+  if (showIntro) {
+    return <IntroScreen onFinish={handleFinish} />;
+  }
   return (
     <div>
       <div className="relative h-screen w-full overflow-hidden">
