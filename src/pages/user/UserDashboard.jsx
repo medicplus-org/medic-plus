@@ -92,7 +92,7 @@ const UserDashboard = () => {
                   My Profile
                 </Link>
                 <Link
-                  to="/my-appointments"
+                  to="/userdashboard"
                   className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
                 >
                   <Calendar className="h-4 w-4 mr-2" />
