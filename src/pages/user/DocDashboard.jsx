@@ -65,7 +65,7 @@ const DocDashboard = () => {
             className="flex items-center space-x-2 text-gray-700 hover:text-indigo-600"
           >
             <User className="w-4 h-4" />
-            <span>Users</span>
+            <span>Profile</span>
           </a>
           <a
             href="#"

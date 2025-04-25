@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ChevronDown, User, Calendar, LogOut } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import {
   apiGetDocAppointment,
   apiDeleteUserAppointmentbyId,
@@ -11,33 +10,22 @@ import toast from "react-hot-toast";
 const UserDashboard = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [appointments, setAppointments] = useState([]);
+  const [user, setUser] = useState(null);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
   const fetchAppointments = async () => {
-    const user = JSON.parse(localStorage.getItem("user"));
     const patientId = user?.UserId || user?._id;
 
-    console.log("Logged-in patient ID:", patientId);
-    console.log("User from localStorage:", user);
-
     try {
-      const response = await apiGetDocAppointment(); // no patientId passed
-      console.log("Raw API response:", response.data);
-
-      const userAppointments = response.data.filter((appt, index) => {
-        if (!appt.patientId) {
-          console.warn(`Appointment ${index} has no patientId`, appt);
-          return false;
-        }
-
-        const apptPatientId = appt.patientId._id || appt.patientId;
+      const response = await apiGetDocAppointment();
+      const userAppointments = response.data.filter((appt) => {
+        const apptPatientId = appt.patientId?._id || appt.patientId;
         return apptPatientId === patientId;
       });
 
-      console.log("Filtered user appointments:", userAppointments);
       setAppointments(userAppointments);
     } catch (error) {
       console.error("Error fetching appointments:", error);
@@ -51,7 +39,6 @@ const UserDashboard = () => {
     try {
       await apiDeleteUserAppointmentbyId(id);
       toast.success("Appointment canceled successfully");
-      // Refresh list after deletion
       fetchAppointments();
     } catch (error) {
       console.error("Failed to cancel appointment:", error);
@@ -60,19 +47,24 @@ const UserDashboard = () => {
   };
 
   useEffect(() => {
-    fetchAppointments();
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    setUser(storedUser);
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      fetchAppointments();
+    }
+  }, [user]);
 
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="border-b border-gray-200">
+      <header className="border-b border-gray-200 shadow-sm bg-white">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center">
-            <Link to="/" className="text-2xl font-bold">
-              Medic<span className="text-blue-400">Plus</span>
-            </Link>
-          </div>
+          <Link to="/" className="text-2xl font-bold text-indigo-700">
+            Medic<span className="text-blue-400">Plus</span>
+          </Link>
           <div className="relative">
             <button
               onClick={toggleDropdown}
@@ -80,7 +72,10 @@ const UserDashboard = () => {
             >
               <div className="h-8 w-8 rounded-full bg-gray-200 overflow-hidden">
                 <img
-                  src="/placeholder.svg?height=32&width=32"
+                  src={
+                    appointments[0]?.patientId?.image ||
+                    "/placeholder.svg?height=32&width=32"
+                  }
                   alt="User avatar"
                   className="h-full w-full object-cover"
                 />
@@ -89,27 +84,27 @@ const UserDashboard = () => {
             </button>
             {isDropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 border border-gray-200">
-                <a
-                  href="#"
-                  className=" px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                <Link
+                  to="/profile"
+                  className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
                 >
                   <User className="h-4 w-4 mr-2" />
                   My Profile
-                </a>
-                <a
-                  href="#"
-                  className=" px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                </Link>
+                <Link
+                  to="/my-appointments"
+                  className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
                 >
                   <Calendar className="h-4 w-4 mr-2" />
                   My Appointments
-                </a>
-                <a
-                  href="#"
-                  className=" px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                </Link>
+                <Link
+                  to="/logout"
+                  className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
                 >
                   <LogOut className="h-4 w-4 mr-2" />
                   Logout
-                </a>
+                </Link>
               </div>
             )}
           </div>
@@ -118,50 +113,56 @@ const UserDashboard = () => {
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-6">Patient Dashboard</h1>
-        <div className="border-b px-4 mb-4 mt-2 pb-4 border-stone-200">
-          <div className="flex items-center justify-between p-0.5">
+        <h1 className="text-3xl font-bold mb-6 text-indigo-700">
+          Patient Dashboard
+        </h1>
+        <div className="border-b px-4 mb-6 pb-4 border-stone-200">
+          <div className="flex items-center justify-between">
             <div>
-              <Link
-                to={"/dashboard/vendor-profile"}
-                className="text-sm font-bold block"
-              >
-                Good morning, Patient!
-                {/* {vendor.name}! */}
-              </Link>
-              <span className="text-xs block text-stone-500">
+              <p className="text-lg font-semibold">
+                Good morning,{" "}
+                {appointments[0]?.patientId?.firstname
+                  ? `${appointments[0]?.patientId?.firstname} ${appointments[0]?.patientId?.lastname}`
+                  : "Patient"}
+                !
+              </p>
+              <span className="text-sm text-stone-500">
                 Friday, April 25th 2025
               </span>
             </div>
-            <button className="flex text-sm items-center gap-2 bg-stone-100 transition-colors hover:bg-violet-100 hover:text-violet-700 px-3 py-1.5 rounded">
+            <button className="flex text-sm items-center gap-2 bg-indigo-100 text-indigo-700 transition-colors hover:bg-indigo-200 px-3 py-1.5 rounded">
               <Calendar />
               <span>Prev 6 Months</span>
             </button>
           </div>
         </div>
-        <h2 className="text-xl font-medium mb-6 text-center">
+
+        <h2 className="text-xl font-medium mb-6 text-center text-gray-800">
           My Appointments
         </h2>
 
         {appointments.length === 0 ? (
-          <p className="text-gray-500">No appointments found.</p>
+          <p className="text-gray-500 text-center">No appointments found.</p>
         ) : (
           <div className="space-y-4">
             {appointments.map((appointment) => (
               <div
                 key={appointment._id}
-                className="border border-gray-200 rounded-lg p-4 flex justify-between items-center"
+                className="border border-gray-200 rounded-xl p-4 flex justify-between items-center shadow-sm hover:shadow-md transition-shadow"
               >
                 <div className="flex">
-                  <div className="h-24 w-24 bg-gray-100 rounded-lg overflow-hidden mr-6">
+                  <div className="h-24 w-24 bg-gray-100 rounded-lg overflow-hidden mr-6 border border-gray-300">
                     <img
-                      src="/placeholder.svg?height=96&width=96"
+                      src={
+                        appointment.doctorId?.image ||
+                        "/placeholder.svg?height=96&width=96"
+                      }
                       alt={appointment.doctorId?.name || "Doctor"}
                       className="h-full w-full object-cover"
                     />
                   </div>
                   <div>
-                    <h3 className="font-medium text-lg">
+                    <h3 className="font-medium text-lg text-indigo-700">
                       {appointment.doctorId?.name}
                     </h3>
                     <p className="text-gray-500 text-sm">
@@ -184,12 +185,12 @@ const UserDashboard = () => {
                     </button>
                   )}
                   {appointment.status === "paid" && (
-                    <button className="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600 transition-colors w-32">
+                    <button className="bg-green-500 text-white px-6 py-2 rounded-md w-32 cursor-default">
                       Paid
                     </button>
                   )}
                   {appointment.status === "upcoming" && (
-                    <button className="bg-yellow-500 text-white px-6 py-2 rounded-md hover:bg-yellow-600 transition-colors w-32">
+                    <button className="bg-yellow-500 text-white px-6 py-2 rounded-md w-32 cursor-default">
                       Upcoming
                     </button>
                   )}
@@ -197,14 +198,13 @@ const UserDashboard = () => {
                     onClick={() => handleDeleteAppointment(appointment._id)}
                     className="border border-gray-300 text-gray-600 px-4 py-2 rounded-md hover:bg-gray-50 transition-colors w-32"
                   >
-                    Cancel appointment
+                    Cancel
                   </button>
-
                   <Link
                     to={`/edit-appointment/${appointment._id}`}
                     className="border border-gray-300 text-center text-gray-600 px-4 py-2 rounded-md hover:bg-gray-50 transition-colors w-32"
                   >
-                    Update appointment
+                    Update
                   </Link>
                 </div>
               </div>
