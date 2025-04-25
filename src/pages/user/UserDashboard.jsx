@@ -196,13 +196,13 @@ const UserDashboard = () => {
                   )}
                   <button
                     onClick={() => handleDeleteAppointment(appointment._id)}
-                    className="border border-gray-300 text-gray-600 px-4 py-2 rounded-md hover:bg-gray-50 transition-colors w-32"
+                    className="border border-gray-300 text-red-600 px-4 py-2 rounded-md hover:bg-gray-50 transition-colors w-32"
                   >
                     Cancel
                   </button>
                   <Link
                     to={`/edit-appointment/${appointment._id}`}
-                    className="border border-gray-300 text-center text-gray-600 px-4 py-2 rounded-md hover:bg-gray-50 transition-colors w-32"
+                    className="border border-gray-300 text-center text-blue-600 px-4 py-2 rounded-md hover:bg-gray-50 transition-colors w-32"
                   >
                     Update
                   </Link>
